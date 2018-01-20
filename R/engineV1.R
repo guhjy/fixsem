@@ -39,7 +39,7 @@
     }
 
 
-    if(length(group) > 0){
+    if(length(group) != 0){
       group <- c("NULL", group)
     }
     TickIterCount <- 0
