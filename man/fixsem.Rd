@@ -5,9 +5,10 @@
 \title{fixsem}
 \usage{
 fixsem(model, data, group = NULL, growth = F,
-  remote = getOption("kaefaServers"), method = c("WLS", "DWLS", "WLSM",
-  "WLSMV", "WLSMVS", "ML", "MLM", "MLMV", "MLMVS", "MLF", "MLR", "ULS", "ULSM",
-  "ULSMV", "ULSMVS"))
+  remote = getOption("kaefaServers"), fastrun = F, method = if (fastrun) {
+      ((c("ML", "MLM", "MLMV", "MLMVS", "MLF", "MLR"))) } else {     ((c("WLS",
+  "DWLS", "WLSM", "WLSMV", "WLSMVS", "ML", "MLM", "MLMV", "MLMVS", "MLF", "MLR",
+  "ULS", "ULSM", "ULSMV", "ULSMVS"))) })
 }
 \arguments{
 \item{model}{a lavaan-style syntax}
@@ -19,6 +20,8 @@ fixsem(model, data, group = NULL, growth = F,
 \item{growth}{logical; your model is growth model? default is FALSE}
 
 \item{remote}{see future::plan()}
+
+\item{fastrun}{logical; default is FALSE. If you turn on to TRUE, it will be run with ML family.}
 
 \item{method}{calibration method what can lavaan run}
 }

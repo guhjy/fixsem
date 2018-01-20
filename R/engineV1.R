@@ -13,6 +13,7 @@
 #' @param group specify the group if you want
 #' @param growth logical; your model is growth model? default is FALSE
 #' @param remote see future::plan()
+#' @param fastrun logical; default is FALSE. If you turn on to TRUE, it will be run with ML family.
 #' @param method calibration method what can lavaan run
 #'
 #' @return calibrated lavaan models
@@ -26,10 +27,11 @@
 #'geocode(dat)
 #'}
   fixsem <- function(model, data, group = NULL, growth = F,
-                     remote = getOption("kaefaServers"),
-                     method = c("WLS", "DWLS", "WLSM", "WLSMV", "WLSMVS",
-                                "ML", "MLM", "MLMV", "MLMVS", "MLF", "MLR",
-                                "ULS", "ULSM", "ULSMV", "ULSMVS")){
+                     remote = getOption("kaefaServers"), fastrun = F,
+                     method = if(fastrun) {((c("ML", "MLM", "MLMV", "MLMVS", "MLF", "MLR")))}
+                     else {((c("WLS", "DWLS", "WLSM", "WLSMV", "WLSMVS",
+                             "ML", "MLM", "MLMV", "MLMVS", "MLF", "MLR",
+                             "ULS", "ULSM", "ULSMV", "ULSMVS")))}){
     fitPre <- lavaan::sem(model, data)
     CatOn <- T
     for(i in 1:length(data[fitPre@Data@ov$name])){
@@ -37,11 +39,8 @@
         CatOn <- F
       }
     }
-
-
-    if(length(group) != 0){
-      group <- c("NULL", group)
-    }
+    
+    group <- c("NULL", group)
     TickIterCount <- 0
     # ticktock counter
     for(groups in group){
@@ -73,7 +72,6 @@
         total = TickIterCount, clear = T, width= 170)
       grandCount <- grandCount + 1
       iterCount <- 0
-      # pb$tick(0)
       models <- listenv::listenv()
       invisible(gc())
 
