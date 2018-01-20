@@ -73,7 +73,7 @@
         total = TickIterCount, clear = T, width= 170)
       grandCount <- grandCount + 1
       iterCount <- 0
-      pb$tick(0)
+      # pb$tick(0)
       models <- listenv::listenv()
       invisible(gc())
 
