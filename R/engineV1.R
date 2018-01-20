@@ -68,7 +68,7 @@
     while(iterate){
       invisible(gc())
       pb <- progress_bar$new(
-        format = "  (:spin) estimating :type SEM model [:bar] :percent (:current/:total) in :elapsed, eta: :eta, in :grandCount fix trials / Estimator: :calibMethod, MIMIC: :mimic, Optimiser: :optim.method, Group: :group",
+        format = "  (:spin) estimating :type SEM model [:bar] :percent (:current/:total) in :elapsed, eta: :eta left, in :grandCount fix trials / Estimator: :calibMethod, MIMIC: :mimic, Optimiser: :optim.method, Group: :group",
         total = TickIterCount, clear = T, width= 170)
       grandCount <- grandCount + 1
       iterCount <- 0
