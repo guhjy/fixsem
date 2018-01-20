@@ -157,6 +157,11 @@
         }
       }
     }
+    
+    if(NROW(good) == 0){
+      stop('all model was non-convergence.')
+    }
+    
     value_RMSEA_lower <- listenv::listenv()
     valueBIC <- listenv::listenv()
     count <- 0
