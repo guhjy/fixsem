@@ -95,9 +95,9 @@
                       iterCount <- iterCount + 1
                       pb$tick(tokens = list(grandCount = toOrdinal::toOrdinal(grandCount), optim.method = optim.method, mimic = mimic, calibMethod = calibMethod, type = 'Discrete', group = groups))
                       if(growth){
-                        models[[iterCount]] %<-% tryCatch(lavaan::growth(model = model, data = data, estimator = calibMethod, ordered = names(data)[!names(data) %in% iterGroup], meanstructure=meanstructure, parameterization = parameterisation, std.lv = stdlv, mimic = mimic, optim.method = optim.method, group = iterGroup, group.equal = groupEqual), error = function(e) {})
+                        models[[iterCount]] %<-% tryCatch(.estgrowth(model = model, data = data, estimator = calibMethod, ordered = names(data)[!names(data) %in% iterGroup], meanstructure=meanstructure, parameterization = parameterisation, std.lv = stdlv, mimic = mimic, optim.method = optim.method, group = iterGroup, group.equal = groupEqual), error = function(e) {})
                       } else {
-                        models[[iterCount]] %<-% tryCatch(lavaan::sem(model = model, data = data, estimator = calibMethod, ordered = names(data)[!names(data) %in% iterGroup], meanstructure=meanstructure, parameterization = parameterisation, std.lv = stdlv, mimic = mimic, optim.method = optim.method, group = iterGroup, group.equal = groupEqual), error = function(e) {})
+                        models[[iterCount]] %<-% tryCatch(.estsem(model = model, data = data, estimator = calibMethod, ordered = names(data)[!names(data) %in% iterGroup], meanstructure=meanstructure, parameterization = parameterisation, std.lv = stdlv, mimic = mimic, optim.method = optim.method, group = iterGroup, group.equal = groupEqual), error = function(e) {})
                       }
                     }
                   }
@@ -106,9 +106,9 @@
 
                   invisible(gc())
                   if(growth){
-                    models[[iterCount]] %<-% tryCatch(lavaan::growth(model = model, data = data, estimator = calibMethod, meanstructure=meanstructure, std.lv = stdlv, mimic = mimic, optim.method = optim.method, group = iterGroup, group.equal = groupEqual), error = function(e) {})
+                    models[[iterCount]] %<-% tryCatch(.estgrowth(model = model, data = data, estimator = calibMethod, meanstructure=meanstructure, std.lv = stdlv, mimic = mimic, optim.method = optim.method, group = iterGroup, group.equal = groupEqual), error = function(e) {})
                   } else {
-                    models[[iterCount]] %<-% tryCatch(lavaan::sem(model = model, data = data, estimator = calibMethod, meanstructure=meanstructure, std.lv = stdlv, mimic = mimic, optim.method = optim.method, group = iterGroup, group.equal = groupEqual), error = function(e) {})
+                    models[[iterCount]] %<-% tryCatch(.estsem(model = model, data = data, estimator = calibMethod, meanstructure=meanstructure, std.lv = stdlv, mimic = mimic, optim.method = optim.method, group = iterGroup, group.equal = groupEqual), error = function(e) {})
                   }
                 }
               }
@@ -142,7 +142,25 @@
     models
   }
 
-
+  #' @export
+  .estsem <- function(model, data, estimator, ordered = NULL, meanstructure, parameterization = 'delta', std.lv, mimic, optim.method, group, group.equal){
+    mod <- lavaan::sem(model = model, data = data, estimator = estimator, ordered = ordered, meanstructure=meanstructure, parameterization = parameterization, std.lv = std.lv, mimic = mimic, optim.method = optim.method, group = group, group.equal = group.equal)
+    if(mod@optim$converged){
+      mod
+    } else {
+      NULL
+    }
+  }
+  
+  #' @export
+  .estgrowth <- function(model, data, estimator, ordered = NULL, meanstructure, parameterization = 'delta', std.lv, mimic, optim.method, group, group.equal){
+    mod <- lavaan::growth(model = model, data = data, estimator = estimator, ordered = ordered, meanstructure=meanstructure, parameterization = parameterization, std.lv = std.lv, mimic = mimic, optim.method = optim.method, group = group, group.equal = group.equal)
+    if(mod@optim$converged){
+      mod
+    } else {
+      NULL
+    }
+  }
   #' @export
   .convergenceChecker <- function(fitlist){
     good <- list()
