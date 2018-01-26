@@ -144,6 +144,7 @@
 
   #' @export
   .estsem <- function(model, data, estimator, ordered = NULL, meanstructure, parameterization = 'delta', std.lv, mimic, optim.method, group, group.equal){
+    invisible(gc())
     mod <- lavaan::sem(model = model, data = data, estimator = estimator, ordered = ordered, meanstructure=meanstructure, parameterization = parameterization, std.lv = std.lv, mimic = mimic, optim.method = optim.method, group = group, group.equal = group.equal)
     if(mod@optim$converged){
       mod
@@ -154,6 +155,7 @@
   
   #' @export
   .estgrowth <- function(model, data, estimator, ordered = NULL, meanstructure, parameterization = 'delta', std.lv, mimic, optim.method, group, group.equal){
+    invisible(gc())
     mod <- lavaan::growth(model = model, data = data, estimator = estimator, ordered = ordered, meanstructure=meanstructure, parameterization = parameterization, std.lv = std.lv, mimic = mimic, optim.method = optim.method, group = group, group.equal = group.equal)
     if(mod@optim$converged){
       mod
