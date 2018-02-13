@@ -116,9 +116,12 @@
           }
         }
       }
+      
+      models <- as.list(models)
+      saveRDS(models, 'temp.RDS')
 
 
-      models <- .convergenceChecker(as.list(models))
+      models <- .convergenceChecker(models)
 
       MIpower %<-% semTools::miPowerFit(models)
       # MIpower[MIpower$op != "=~",]
