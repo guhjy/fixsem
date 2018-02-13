@@ -178,7 +178,7 @@
       }
     }
     
-    if(NROW(good) == 0){
+    if(count == 0){
       stop('all model was non-convergence.')
     }
     
