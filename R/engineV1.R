@@ -78,7 +78,7 @@
       for(groups in group){
         if(groups == "NULL"){
           iterGroup <- NULL
-          groupEqual <- NULL
+          groupEqual <- "none"
         } else {
           iterGroup <- groups
           groupEqual <- c("loadings", "intercepts", "residuals", "lv.variances",
