@@ -126,6 +126,7 @@
       # MIpower[MIpower$op != "=~",]
       if(NROW(MIpower) != 0){
         MIpower <- MIpower[MIpower$decision.pow == "NM",]
+        print(MIpower)
       } else {
         # STOP <- T
       }
