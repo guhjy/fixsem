@@ -194,7 +194,9 @@
     for(i in good){
       count <- count + 1
       pb$tick()
-      value_RMSEA_lower[[count]] %<-% lavaan::fitmeasures(i, "rmsea.ci.lower")
+      if(!is.null(tryCatch(lavaan::fitmeasures(i, "rmsea.ci.lower"), error=function(e){return(NULL)}))){
+        value_RMSEA_lower[[count]] %<-% lavaan::fitmeasures(i, "rmsea.ci.lower")
+      }
     }
 
     value_RMSEA_lower <- unlist(as.list(value_RMSEA_lower))
