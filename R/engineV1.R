@@ -29,9 +29,9 @@
   fixsem <- function(model, data, group = NULL, growth = F,
                      remote = getOption("kaefaServers"), fastrun = F,
                      method = if(fastrun) {((c("ML", "MLM", "MLMV", "MLMVS", "MLF", "MLR")))}
-                     else {((c("WLS", "DWLS", "WLSM", "WLSMV", "WLSMVS",
+                     else {((c("WLSM", "WLSMV", "WLSMVS",
                              "ML", "MLM", "MLMV", "MLMVS", "MLF", "MLR",
-                             "ULS", "ULSM", "ULSMV", "ULSMVS")))}){
+                             "ULSM", "ULSMV", "ULSMVS")))}){
     fitPre <- lavaan::sem(model, data)
     CatOn <- T
     for(i in 1:length(data[fitPre@Data@ov$name])){
