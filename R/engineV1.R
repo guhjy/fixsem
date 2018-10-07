@@ -172,7 +172,7 @@
     count <- 0
     for(i in fitlist){
       if(!is.null(i)){
-        if(i@optim$converged){
+        if(i@optim$converged & sum(is.na(lavaan::parameterestimates(fit)$se)) > 0){
           count <- count + 1
           good[[count]] <- i
         } else {
@@ -194,7 +194,8 @@
     for(i in good){
       count <- count + 1
       pb$tick()
-        value_RMSEA_lower[[count]] %<-% tryCatch(lavaan::fitmeasures(i, "rmsea.ci.lower"), error=function(e){return(NULL)})
+      # value_RMSEA_lower[[count]] %<-% tryCatch(lavaan::fitmeasures(i, "rmsea.ci.lower"), error=function(e){return(NULL)})
+      value_RMSEA_lower[[count]] %<-% lavaan::fitmeasures(i, "rmsea.ci.lower")
     }
 
     value_RMSEA_lower <- unlist(as.list(value_RMSEA_lower))
