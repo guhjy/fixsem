@@ -172,7 +172,7 @@
     count <- 0
     for(i in fitlist){
       if(!is.null(i)){
-        if(i@optim$converged & sum(is.na(lavaan::parameterestimates(fit)$se)) > 0){
+        if(i@optim$converged & sum(is.na(lavaan::parameterestimates(fit)$se)) == 0){
           count <- count + 1
           good[[count]] <- i
         } else {
